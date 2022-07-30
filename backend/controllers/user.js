@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const security = require('../security/security');
 
 //Fonction pour créer un nouveau User et hasher le password 10 fois avec bcrypt
 exports.signup = (req, res, next) => {
@@ -32,7 +33,7 @@ exports.login = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id},
-                            'RANDOM_TOKEN_SECRET',
+                            security.secretToken,
                             { expiresIn: '24h' }
                         )
                     });
